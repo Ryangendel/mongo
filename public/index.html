@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h2>How to submit an HTML form using JavaScript?</h2>
+    <p id="result"></p>
+    <form id="myForm">
+        <label>Username:</label>
+        <input type="text" id="inp1" name="username"><br>
+        <label>Password: </label>
+        <input type="password" id="inp2" name="password"><br><br>
+        <button type="submit" onclick="submitForm(event)">Submit</button>
+    </form>
+    <script>
+        var myForm = document.getElementById("myForm");
+        var result = document.getElementById("result");
+        
+        function submitForm(event) {
+            event.preventDefault();
+            var val1 = document.getElementById("inp1").value
+            var val2 = document.getElementById("inp2").value
+            console.log(val1)
+            console.log(val2)
+            //myForm.submit();
+            result.innerHTML = "<b>The button is pressed and form is submitted.</b>"
+
+            fetch("/api/adddata", {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify({ username: val1, password: val2 }) // body data type must match "Content-Type" header
+            })
+                .then(cData => {
+                    console.log("INSIDE POST")
+                    console.log(cData)
+                    var val1 = document.getElementById("inp1").value = ""
+                    var val2 = document.getElementById("inp2").value = ""   
+                })
+        }
+
+
+
+    //   fetch("/api/getdata")
+    //         .then(data => data.json())
+    //         .then(async cleanedData => {
+    //             console.log("==========")
+    //             console.log(cleanedData)
+    //             console.log("==========")
+    //             var elements = []
+    //             for (let i = 0; i < cleanedData.length; i++) {
+    //                 elements.push(`<div>${cleanedData[i]._id}</div>`)
+
+
+    //             }
+    //         })
+
+    //     //                 var html_to_insert = "<p>New paragraph</p>";
+
+    //     // // with .innerHTML, destroys event listeners
+    //     // document.getElementById('mydiv').innerHTML += html_to_insert;
+
+    //     // // with .insertAdjacentHTML, preserves event listeners
+    //     // document.getElementById('mydiv').insertAdjacentHTML('beforeend', html_to_insert);
+
+    //     //document.getElementById("content").innerHTML= forEach(elements)
+
+    </script>
+</body>
+
+</html>
